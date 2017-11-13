@@ -31,12 +31,12 @@ public class ControllerLanguages {
 		return "indexPage";
 	}
 
-	@RequestMapping("/language")
+	@PostMapping("/language")
 	public String createLanguage(@Valid @ModelAttribute("languages") ModelLanguage languages, BindingResult result,RedirectAttributes redirectAttributes,Model model) {
 		if (result.hasErrors()) {
-//			redirectAttributes.addFlashAttribute("nameError", "name is requried");
-//			redirectAttributes.addFlashAttribute("creatorError", "creator is requried");
-//			redirectAttributes.addFlashAttribute("versionError", "version is requried");
+			redirectAttributes.addFlashAttribute("nameError", "name is requried");
+			redirectAttributes.addFlashAttribute("creatorError", "creator is requried");
+			redirectAttributes.addFlashAttribute("versionError", "version is requried");
 
 			return "redirect:/";
 		}
@@ -47,19 +47,19 @@ public class ControllerLanguages {
 	}
 	
 	@RequestMapping("/language/{id}")
-	public String findLanguageByIndex(Model model, @PathVariable("id") int index) {
-		ModelLanguage language = languageServices.findLanguage(index);
+	public String findLanguageByIndex(Model model, @PathVariable("id") Long id) {
+		ModelLanguage language = languageServices.findLanguage(id);
 		model.addAttribute("language",language);
 		
 		return "viewPage";
 	}
-	@RequestMapping("/language/delete/{index}")
-	public String delete(Model model, @PathVariable("index") int id) {
+	@RequestMapping("/language/delete/{id}")
+	public String delete(Model model, @PathVariable("id") Long id) {
 		languageServices.deleteLanguage(id);
 		return "redirect:/";
 	}
 	@RequestMapping("/language/edit/{id}")
-		public String editLanguage(Model model, @PathVariable("id") int id) {
+		public String editLanguage(Model model, @PathVariable("id") Long id) {
 		ModelLanguage languages = languageServices.findLanguage(id);
 		if(languages != null) {
 			model.addAttribute("languages", languages);
@@ -70,15 +70,15 @@ public class ControllerLanguages {
 		}
 	}
 	@PostMapping("/language/edit/{id}")
-	public String updateBook(@PathVariable("id") int id, @Valid @ModelAttribute("languages") ModelLanguage languages, BindingResult result, RedirectAttributes redirectAttributes) {
+	public String updateBook(@PathVariable("id") Long id, @Valid @ModelAttribute("languages") ModelLanguage languages, BindingResult result, RedirectAttributes redirectAttributes) {
 		if(result.hasErrors()) {
-			redirectAttributes.addFlashAttribute("nameError", "name is requried");
-			redirectAttributes.addFlashAttribute("creatorError", "creator is requried");
-			redirectAttributes.addFlashAttribute("versionError", "version is requried");
+//			redirectAttributes.addFlashAttribute("nameError", "name is requried");
+//			redirectAttributes.addFlashAttribute("creatorError", "creator is requried");
+//			redirectAttributes.addFlashAttribute("versionError", "version is requried");
 			return "editPage";
 		}
 		else {
-			languageServices.updateLanguage(id, languages);
+			languageServices.updateLanguage(languages);
 		return "redirect:/";
 		}
 	}

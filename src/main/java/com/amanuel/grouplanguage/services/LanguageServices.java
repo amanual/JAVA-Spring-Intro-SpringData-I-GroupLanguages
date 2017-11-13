@@ -6,38 +6,36 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.amanuel.grouplanguage.model.ModelLanguage;
+import com.amanuel.grouplanguage.repositories.LanguageRepository;
 @Service
 public class LanguageServices {
-
+	private LanguageRepository languageRepository;
+	public LanguageServices(LanguageRepository languageRepository) {
+		this.languageRepository = languageRepository;
+	}
 	List<ModelLanguage> languages = new ArrayList(Arrays.asList(
-			new ModelLanguage("Python","Some body", "version 1.0"),
-			new ModelLanguage("MEAN","Some body", "version 2.0"),
-			new ModelLanguage("Java","Some body", "version 3.0")
+			new ModelLanguage("Python","Some body", 1),
+			new ModelLanguage("MEAN","Some body", 2),
+			new ModelLanguage("Java","Some body", 3)
 			));
 	
 	public void addLanguages(ModelLanguage lang){
-		languages.add(lang);
+		languageRepository.save(lang);
 
 	}
 	public List<ModelLanguage> allLanguages(){
-		return languages;
+		return languageRepository.findAll();
 	}
-	public ModelLanguage findLanguage(int index) {
-		if (index < languages.size()) {
-			return languages.get(index);
-		}
-		else {
-			return null;
-		}
+	public ModelLanguage findLanguage(Long id) {
+		return languageRepository.findOne(id);
+		
 	}
-	public void deleteLanguage(int id) {
-		if(id < languages.size()) {
-			languages.remove(id);
-		}
+	public void deleteLanguage(Long id) {
+		languageRepository.delete(id);
 	}
-	public void updateLanguage(int id, ModelLanguage language) {
-		if(id < languages.size()) {
-			languages.set(id, language);
-		}
+	public void updateLanguage( ModelLanguage language) {
+		languageRepository.save(language);
+		
 	}
+	
 }

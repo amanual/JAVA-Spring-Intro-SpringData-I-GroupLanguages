@@ -13,9 +13,10 @@
 	<p><a href = "/language/delete/${ id }">delete</a> &nbsp; <a href = "/">Dashboard</a></p>
 	<div>
 		<form:form method = "POST" action = "/language/edit/${ id }" modelAttribute = "languages">
+				<form:hidden path="id"/>
 			<p><form:label path = "name"> Name: <form:input path= "name" />  &nbsp; <form:errors path = "name" />   &nbsp; <label class = "errors"><c:out value="${ nameError }" /></label></form:label></p>
 			<p><form:label path = "creator"> Creator: <form:input path = "creator" /> &nbsp; <form:errors path = "creator" /> &nbsp; <label class = "errors"><c:out value="${ creatorError }" /></label> </form:label> </p>
-			<p><form:label path = "version"> Version: <form:input path= "version" /> &nbsp; <form:errors path = "version" />  &nbsp; <label class = "errors"><c:out value="${ versionError }" /></label> </form:label></p>
+			<p><form:label path = "version"> Version: <form:input type = "number" path= "version" /> &nbsp; <form:errors path = "version" />  &nbsp; <label class = "errors"><c:out value="${ versionError }" /></label> </form:label></p>
 			<input type = "submit" value = "Submit">
 		
 		</form:form>

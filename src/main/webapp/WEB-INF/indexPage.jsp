@@ -20,19 +20,21 @@
 			</tr>
 			<c:forEach items = "${ langDisplay }" var = "langs" varStatus = "loop">
 				<tr>
-					<td><a href = "/language/${ loop.index }"><c:out value="${ langs.name }" /></a> </td>
+					<td><a href = "/language/${ langs.id }"><c:out value="${ langs.name }" /></a> </td>
 					<td><c:out value="${ langs.creator }" /> </td>
 					<td><c:out value="${ langs.version }" /> </td>
-					<td><a href = "/language/delete/${ loop.index}">delete</a> &nbsp; <a href = "/language/edit/${ loop.index }">edit</a></td>
+					<td><a href = "/language/delete/${ langs.id}">delete</a> &nbsp; <a href = "/language/edit/${ langs.id }">edit</a></td>
 				</tr>
+				
 			</c:forEach>
 		</table>
 	</div>
 	<div>
 		<form:form method = "POST" action = "/language" modelAttribute = "languages">
-			<p><form:label path = "name"> Name: <form:input path= "name" /> <form:errors path = "name" /></form:label> &nbsp; <label class = "errors"><c:out value="${ nameError }" /></label></p>
-			<p><form:label path = "creator"> Creator: <form:errors path = "creator" /><form:input path = "creator" /></form:label> &nbsp; <label class = "errors"><c:out value="${ creatorError }" /></label></p>
-			<p><form:label path = "version"> Version: <form:errors path = "version" /><form:input path= "version" /></form:label>  &nbsp; <label class = "errors"><c:out value="${ versionError }" /></label></p>
+				<form:hidden path="id"/>
+			<p><form:label path = "name"> Name: <form:input path= "name" /> &nbsp; <form:errors path = "name" /> &nbsp; <label class = "errors"><c:out value="${ nameError }" /></label></form:label></p>
+			<p><form:label path = "creator"> Creator: <form:input path = "creator" /> &nbsp; <form:errors path = "creator" /> &nbsp; <label class = "errors"><c:out value="${ creatorError }" /></label></form:label></p>
+			<p><form:label path = "version"> Version: <form:input type = "number" path= "version" /> &nbsp; <form:errors path = "version" /> &nbsp; <label class = "errors"><c:out value="${ versionError }" /></label></form:label></p>
 			<input type = "submit" value = "Submit">
 		
 		</form:form>
